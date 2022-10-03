@@ -2,8 +2,8 @@ import {useState, useEffect, useContext} from 'react';
 import {URL_API} from '../api/const';
 import {tokenContext} from '../context/tokenContext';
 
-export const useBestPosts = (id) => {
-  const [comments, setComments] = useState([]);
+export const useCommentsData = (id) => {
+  const [commentsDaten, setCommentsData] = useState([]);
   const {token} = useContext(tokenContext);
 
   useEffect(() => {
@@ -14,15 +14,33 @@ export const useBestPosts = (id) => {
         Authorization: `bearer ${token}`,
       },
     })
-      .then(response => response.json())
-      .then(({data}) => {
-        const postsData = data.children;
-        setComments(postsData);
+      .then((response) => {
+        if (response.status === 401) {
+          throw new Error(response.status);
+        }
+        return response.json();
       })
-      .catch(err => {
+      .then(
+        ([
+          {
+            data: {
+              children: [{data: post}],
+            },
+          },
+          {
+            data: {
+              children,
+            },
+          },
+        ]) => {
+          const comments = children.map(item => item.data);
+          setCommentsData([post, comments]);
+        },
+      )
+      .catch((err) => {
         console.error(err);
       });
   }, [token]);
 
-  return [comments];
+  return [commentsDaten];
 };

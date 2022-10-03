@@ -4,9 +4,14 @@ import PropTypes from 'prop-types';
 import Markdown from 'markdown-to-jsx';
 import ReactDOM from 'react-dom';
 import {useRef, useEffect, useCallback} from 'react';
+import {FormComment} from './FormComment/FormComment';
+import {useCommentsData} from './../../hooks/useCommentsData';
+import {Comments} from './Comments/Comments';
 
-export const Modal = ({title, author, markdown, closeModal}) => {
+export const Modal = ({id, closeModal}) => {
   const overlayRef = useRef(null);
+  const [commentsDaten] = useCommentsData(id);
+  const [post, comments] = commentsDaten;
 
   const handleClick = e => {
     const target = e.target;
@@ -33,27 +38,34 @@ export const Modal = ({title, author, markdown, closeModal}) => {
   return ReactDOM.createPortal( 
     <div className={style.overlay} ref={overlayRef} >
       <div className={style.modal}>
-        <h2 className={style.title}>{title}</h2>
-
-        <div className={style.content}>
-          <Markdown options={{
-            overrides: {
-              a: {
-                props: {
-                  target: '_blank',
-                },
-              },
-            },
-          }}>
-            {markdown}
-          </Markdown>
-        </div>
-
-        <p className={style.author}>{author}</p>
-        
-        <button className={style.close} onClick={closeModal}>
-          <CloseSvg />
-        </button>
+        {
+          post ? (
+            <> 
+              <h2 className={style.title}>{post.title}</h2>
+              <div className={style.content}>
+                <Markdown options={{
+                  overrides: {
+                    a: {
+                      props: {
+                        target: '_blank',
+                      },
+                    },
+                  },
+                }}>
+                  {post}
+                </Markdown>
+              </div>
+              <p className={style.author}>{post.author}</p>
+              <button className={style.close} onClick={closeModal}>
+                <CloseSvg />
+              </button>
+              <FormComment />
+              <Comments comments={comments} />
+            </>
+          ) : (
+            <p className={style.load}>Загрузка...</p>
+          )
+        }
       </div>
     </div>,
     document.getElementById('modal-root'),
