@@ -8,8 +8,9 @@ export const Comments = ({comments}) => {
   console.log(comments);
   
   return (<ul className={style.list}>
-    {comments ? (
+    {comments.length ? (
       comments.map(({body, author, id, created: date}) => (
+        date && 
         <li key={id} className={style.item}>
           <Text As='h3' className={style.author} size={18} tsize={22}>{author}</Text>
           <Text As='p' className={style.comment} size={14} tsize={18}>{body}</Text>
