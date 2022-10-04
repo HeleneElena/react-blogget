@@ -52,20 +52,20 @@ export const Modal = ({id, closeModal}) => {
                     },
                   },
                 }}>
-                  {post}
+                  {post.selftext}
                 </Markdown>
               </div>
               <p className={style.author}>{post.author}</p>
-              <button className={style.close} onClick={closeModal}>
-                <CloseSvg />
-              </button>
-              <FormComment />
+              <FormComment author={post.author} />
               <Comments comments={comments} />
             </>
           ) : (
             <p className={style.load}>Загрузка...</p>
           )
         }
+        <button className={style.close} onClick={closeModal}>
+          <CloseSvg />
+        </button>
       </div>
     </div>,
     document.getElementById('modal-root'),
