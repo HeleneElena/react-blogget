@@ -2,14 +2,15 @@ import style from './FormComment.module.css';
 import {Text} from '../../../UI/Text';
 import {useContext, useState} from 'react';
 import {authContext} from './../../../context/authContext';
-import {CommentContext} from '../../../context/commentContext';
-import {useStore} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {updateComment} from '../../../store';
 
 export const FormComment = () => {
-  const store = useStore();
+  const value = useSelector(state => state.comment);
+  const dispatch = useDispatch();
+
   const [formOpen, setFormOpen] = useState(false);
   const {auth} = useContext(authContext);
-  const {value, setValue} = useContext(CommentContext);
 
   const userComment = e => {
     e.preventDefault();
@@ -21,7 +22,7 @@ export const FormComment = () => {
   };
 
   const handleChange = e => {
-    setValue(e.target.value);
+    dispatch(updateComment(e.target.value));
   };
 
   return formOpen ? (

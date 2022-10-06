@@ -36,7 +36,7 @@ export const Modal = ({id, closeModal}) => {
   }, []);
 
   return ReactDOM.createPortal( 
-    <div className={style.overlay} ref={overlayRef} >
+    <div className={style.overlay} ref={overlayRef}>
       <div className={style.modal}>
         {
           post ? (
