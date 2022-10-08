@@ -6,10 +6,11 @@ import {Text} from '../../../UI/Text';
 
 import {urlAuth} from '../../../api/auth';
 import {authContext} from '../../../context/authContext';
-import {tokenContext} from '../../../context/tokenContext';
+import {useDispatch} from 'react-redux';
+import {deleteToken} from '../../../store';
 
 export const Auth = () => {
-  const {delToken} = useContext(tokenContext);
+  const dispatch = useDispatch();
   const [showLogout, setShowLogout] = useState(false);
   const {auth, clearAuth} = useContext(authContext);
 
@@ -18,7 +19,7 @@ export const Auth = () => {
   };
 
   const logout = () => {
-    delToken();
+    dispatch(deleteToken());
     clearAuth();
   };
 

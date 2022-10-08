@@ -18,8 +18,8 @@ export const useAuth = () => {
     })
       .then(response => {
         if (response.status === 401) {
-          dispatch(deleteToken);
-          return;
+          dispatch(deleteToken());
+          throw new Error(response.status);
         }
         return response.json();
       })
@@ -31,7 +31,7 @@ export const useAuth = () => {
       .catch(err => {
         console.error('Произошла ошибка: ', err);
         setAuth({});
-        dispatch(deleteToken);
+        dispatch(deleteToken());
       });
   }, [token]);
 
