@@ -5,7 +5,7 @@ import {URL_API} from '../api/const';
 
 export const useBestPosts = () => {
   const [posts, setPosts] = useState([]);
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.tokenReducer.token);
 
   useEffect(() => {
     if (!token) return;

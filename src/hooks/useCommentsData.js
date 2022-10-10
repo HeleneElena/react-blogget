@@ -4,7 +4,7 @@ import {URL_API} from '../api/const';
 
 export const useCommentsData = (id) => {
   const [commentsDaten, setCommentsData] = useState([]);
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.tokenReducer.token);
 
   useEffect(() => {
     if (!token) return;
