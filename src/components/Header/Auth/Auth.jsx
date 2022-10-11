@@ -1,18 +1,18 @@
-import {useState, useContext} from 'react';
+import {useState} from 'react';
 import style from './Auth.module.css';
 
 import {ReactComponent as LoginIcon} from './img/login.svg';
 import {Text} from '../../../UI/Text';
 
 import {urlAuth} from '../../../api/auth';
-import {authContext} from '../../../context/authContext';
 import {useDispatch} from 'react-redux';
 import {deleteToken} from '../../../store/tokenReducer';
+import {useAuth} from './../../../hooks/useAuth';
 
 export const Auth = () => {
   const dispatch = useDispatch();
   const [showLogout, setShowLogout] = useState(false);
-  const {auth, clearAuth} = useContext(authContext);
+  const {auth, clearAuth} = useAuth();
 
   const getOut = () => {
     setShowLogout(!showLogout);
