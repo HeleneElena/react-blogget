@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import {updateToken} from './store/tokenReducer';
 import {getToken} from './api/token';
 
-function App() {
+const App = () => {
   const dispatch = useDispatch();
   dispatch(updateToken(getToken()));
 
@@ -14,6 +14,6 @@ function App() {
       <Main />
     </>
   );
-}
+};
 
 export default App;

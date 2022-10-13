@@ -1,18 +1,19 @@
 import {useState} from 'react';
 import style from './Auth.module.css';
-
+import PropTypes from 'prop-types';
 import {ReactComponent as LoginIcon} from './img/login.svg';
 import {Text} from '../../../UI/Text';
 
 import {urlAuth} from '../../../api/auth';
 import {useDispatch} from 'react-redux';
-import {deleteToken} from '../../../store/tokenReducer';
 import {useAuth} from './../../../hooks/useAuth';
+import {deleteToken} from '../../../store/tokenReducer';
+import Preloader from '../../../UI/Preloader';
 
 export const Auth = () => {
-  const dispatch = useDispatch();
   const [showLogout, setShowLogout] = useState(false);
-  const {auth, clearAuth} = useAuth();
+  const {auth, loading, clearAuth} = useAuth();
+  const dispatch = useDispatch();
 
   const getOut = () => {
     setShowLogout(!showLogout);
@@ -21,11 +22,14 @@ export const Auth = () => {
   const logout = () => {
     dispatch(deleteToken());
     clearAuth();
+    location.href = '/';
   };
 
   return (
     <div className={style.container}>
-      {auth.name ? (
+      {loading ? (
+        <Preloader />
+      ) : auth.name ? (
         <>
           <button className={style.btn} onClick={getOut}>
             <img src={auth.img} title={auth.name} alt={`Аватар ${auth.name}`} className={style.img} />
@@ -43,4 +47,8 @@ export const Auth = () => {
       )}
     </div>
   );
+};
+
+Auth.propTypes = {
+  token: PropTypes.string,
 };

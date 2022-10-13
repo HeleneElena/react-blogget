@@ -7,11 +7,12 @@ import {useRef, useEffect, useCallback} from 'react';
 import {FormComment} from './FormComment/FormComment';
 import {useCommentsData} from './../../hooks/useCommentsData';
 import {Comments} from './Comments/Comments';
+import Preloader from '../../UI/Preloader';
+import {Text} from '../../UI/Text';
 
 export const Modal = ({id, closeModal}) => {
   const overlayRef = useRef(null);
-  const [commentsDaten] = useCommentsData(id);
-  const [post, comments] = commentsDaten;
+  const [post, comments, status] = useCommentsData(id);
 
   const handleClick = e => {
     const target = e.target;
@@ -38,31 +39,35 @@ export const Modal = ({id, closeModal}) => {
   return ReactDOM.createPortal( 
     <div className={style.overlay} ref={overlayRef}>
       <div className={style.modal}>
-        {
-          post ? (
-            <> 
-              <h2 className={style.title}>{post.title}</h2>
-              <div className={style.content}>
-                <Markdown options={{
-                  overrides: {
-                    a: {
-                      props: {
-                        target: '_blank',
-                      },
+        {status === 'loading' && (
+          <Preloader color={'#cc6633'} size={150} />
+        )}
+        {status === 'error' && (
+          <Text As="p" medium dsize={18}>
+            Произошла ошибка загрузки поста.
+          </Text>
+        )}
+        {status === 'loaded' && (
+          <> 
+            <h2 className={style.title}>{post.title}</h2>
+            <div className={style.content}>
+              <Markdown options={{
+                overrides: {
+                  a: {
+                    props: {
+                      target: '_blank',
                     },
                   },
-                }}>
-                  {post.selftext}
-                </Markdown>
-              </div>
-              <p className={style.author}>{post.author}</p>
-              <FormComment author={post.author} />
-              <Comments comments={comments} />
-            </>
-          ) : (
-            <p className={style.load}>Загрузка...</p>
-          )
-        }
+                },
+              }}>
+                {post.selftext}
+              </Markdown>
+            </div>
+            <p className={style.author}>{post.author}</p>
+            <FormComment author={post.author} />
+            <Comments comments={comments} />
+          </>
+        )}
         <button className={style.close} onClick={closeModal}>
           <CloseSvg />
         </button>

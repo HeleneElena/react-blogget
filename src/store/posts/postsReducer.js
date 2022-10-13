@@ -1,37 +1,33 @@
-import {AUTH_REQUEST, AUTH_REQUEST_SUCCESS, AUTH_REQUEST_ERROR, AUTH_LOGOUT} from './action';
+import {POSTS_REQUEST, POSTS_REQUEST_ERROR, POSTS_REQUEST_SUCCESS} from './postsAction';
 
 const initialState = {
   loading: false,
-  data: {},
+  posts: [],
   error: '',
 };
 
-export const authReducer = (state = initialState, action) => {
+export const postsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AUTH_REQUEST:
+    case POSTS_REQUEST:
       return {
         ...state,
         loading: true,
+        error: '',
       };
-    case AUTH_REQUEST_SUCCESS:
+    case POSTS_REQUEST_SUCCESS:
       return {
         ...state,
         loading: false,
-        data: action.data,
+        posts: action.data,
         error: '',
       };
-    case AUTH_REQUEST_ERROR:
+    case POSTS_REQUEST_ERROR:
       return {
         ...state,
         loading: false,
         error: action.error,
       };
-    case AUTH_LOGOUT:
-      return {
-        ...state,
-        data: {},
-      };
-    
+
     default:
       return state;
   }
