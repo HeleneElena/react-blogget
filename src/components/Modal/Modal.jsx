@@ -13,6 +13,7 @@ import {Text} from '../../UI/Text';
 export const Modal = ({id, closeModal}) => {
   const overlayRef = useRef(null);
   const [post, comments, status] = useCommentsData(id);
+  console.log(post, comments);
 
   const handleClick = e => {
     const target = e.target;
@@ -40,7 +41,7 @@ export const Modal = ({id, closeModal}) => {
     <div className={style.overlay} ref={overlayRef}>
       <div className={style.modal}>
         {status === 'loading' && (
-          <Preloader color={'#cc6633'} size={150} />
+          <Preloader color={'#333dcc'} size={150} />
         )}
         {status === 'error' && (
           <Text As="p" medium dsize={18}>

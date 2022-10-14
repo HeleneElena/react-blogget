@@ -33,8 +33,8 @@ export const postsRequestAsync = () => (dispatch, getState) => {
       const postsData = data.children;
       dispatch(postsRequestSuccess(postsData));
     })
-    .catch(err => {
-      console.error('Произошла ошибка: ', err);
-      dispatch(postsRequestError(err.toString()));
+    .catch(error => {
+      console.error('Произошла ошибка: ', error);
+      dispatch(postsRequestError(error.toString()));
     });
 };

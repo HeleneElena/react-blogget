@@ -11,8 +11,10 @@ export const useCommentsData = (id) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(commentsRequestAsync());
+    dispatch(commentsRequestAsync(id));
   }, [token]);
 
   return [post, comments, status];
 };
+
+

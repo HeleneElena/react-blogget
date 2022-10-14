@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {URL_API} from 'api/const';
-import {updateToken, deleteToken} from 'store/tokenReducer';
+import {URL_API} from '../../api/const';
+import {updateToken, deleteToken} from '../../store/tokenReducer';
 
 export const AUTH_REQUEST = 'AUTH_REQUEST';
 export const AUTH_REQUEST_SUCCESS = 'AUTH_REQUEST_SUCCESS';
@@ -35,9 +35,9 @@ export const authRequestAsync = () => (dispatch, getState) => {
       Authorization: `bearer ${token}`,
     },
   })
-    .then(({ data: { name, icon_img: iconImg } }) => {
+    .then(({data: {name, icon_img: iconImg}}) => {
       const img = iconImg.replace(/\?.*$/, '');
-      const data = { name, img };
+      const data = {name, img};
       dispatch(updateToken(token));
       dispatch(authRequestSuccess(data));
     })

@@ -44,8 +44,8 @@ export const commentsRequestAsync = id => (dispatch, getState) => {
         dispatch(commentsRequestSuccess([post, comments]));
       },
     )
-    .catch(err => {
-      console.error('Произошла ошибка: ', err);
-      dispatch(commentsRequestError(err.toString()));
+    .catch(error => {
+      console.error('Произошла ошибка: ', error);
+      dispatch(commentsRequestError(error.toString()));
     });
 };

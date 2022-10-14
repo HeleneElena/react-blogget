@@ -5,14 +5,15 @@ import {ReactComponent as LoginIcon} from './img/login.svg';
 import {Text} from '../../../UI/Text';
 
 import {urlAuth} from '../../../api/auth';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useAuth} from './../../../hooks/useAuth';
 import {deleteToken} from '../../../store/tokenReducer';
 import Preloader from '../../../UI/Preloader';
 
 export const Auth = () => {
+  const [auth, loading, clearAuth] = useAuth();
   const [showLogout, setShowLogout] = useState(false);
-  const {auth, loading, clearAuth} = useAuth();
+  const token = useSelector(state => state.tokenReducer.token);
   const dispatch = useDispatch();
 
   const getOut = () => {
@@ -20,7 +21,7 @@ export const Auth = () => {
   };
 
   const logout = () => {
-    dispatch(deleteToken());
+    dispatch(deleteToken(token));
     clearAuth();
     location.href = '/';
   };

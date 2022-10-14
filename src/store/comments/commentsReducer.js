@@ -1,11 +1,13 @@
 import {COMMENTS_REQUEST, COMMENTS_REQUEST_ERROR, COMMENTS_REQUEST_SUCCESS} from './commentsAction';
 
 const initialState = {
-  post: {},
-  comments: [],
   error: '',
   status: '',
+  data: {},
+  post: {},
+  comments: {},
 };
+
 
 export const commentsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -19,6 +21,7 @@ export const commentsReducer = (state = initialState, action) => {
       return {
         ...state,
         status: 'loaded',
+        data: action.data,
         post: action.data[0],
         comments: action.data[1],
         error: '',

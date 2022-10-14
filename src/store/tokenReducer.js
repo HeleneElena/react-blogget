@@ -12,8 +12,9 @@ export const updateToken = token => ({
   token,
 });
 
-export const deleteToken = () => ({
+export const deleteToken = token => ({
   type: DELETE_TOKEN,
+  token,
 });
 
 export const tokenMiddleware = (store) => (next) => (action) => {
