@@ -1,6 +1,5 @@
 import style from './Modal.module.css';
 import {ReactComponent as CloseSvg} from './img/close.svg';
-import PropTypes from 'prop-types';
 import Markdown from 'markdown-to-jsx';
 import ReactDOM from 'react-dom';
 import {useRef, useEffect, useCallback} from 'react';
@@ -9,22 +8,24 @@ import {useCommentsData} from './../../hooks/useCommentsData';
 import {Comments} from './Comments/Comments';
 import Preloader from '../../UI/Preloader';
 import {Text} from '../../UI/Text';
+import {useParams, useNavigate} from 'react-router-dom';
 
-export const Modal = ({id, closeModal}) => {
+export const Modal = () => {
+  const {id, page} = useParams();
+  const navigate = useNavigate();
   const overlayRef = useRef(null);
   const [post, comments, status] = useCommentsData(id);
-  console.log(post, comments);
 
   const handleClick = e => {
     const target = e.target;
     if (target === overlayRef.current) {
-      closeModal();
+      navigate(`/category/${page}`);
     }
   };
 
   const escFunction = useCallback(e => {
     if (e.key === 'Escape') {
-      closeModal();
+      navigate(`/category/${page}`);
     }
   }, []);
 
@@ -69,7 +70,7 @@ export const Modal = ({id, closeModal}) => {
             <Comments comments={comments} />
           </>
         )}
-        <button className={style.close} onClick={closeModal}>
+        <button className={style.close} onClick={navigate(`/category/${page}`)}>
           <CloseSvg />
         </button>
       </div>
@@ -77,11 +78,5 @@ export const Modal = ({id, closeModal}) => {
     document.getElementById('modal-root'),
   );
 };
-  
-Modal.propTypes = {
-  title: PropTypes.string,
-  author: PropTypes.string,
-  markdown: PropTypes.string,
-  closeModal: PropTypes.func,
-};
+
 
