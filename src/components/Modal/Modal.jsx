@@ -2,7 +2,7 @@ import style from './Modal.module.css';
 import {ReactComponent as CloseSvg} from './img/close.svg';
 import Markdown from 'markdown-to-jsx';
 import ReactDOM from 'react-dom';
-import {useRef, useEffect, useCallback} from 'react';
+import {useRef, useEffect} from 'react';
 import {FormComment} from './FormComment/FormComment';
 import {useCommentsData} from './../../hooks/useCommentsData';
 import {Comments} from './Comments/Comments';
@@ -23,18 +23,23 @@ export const Modal = () => {
     }
   };
 
-  const escFunction = useCallback(e => {
-    if (e.key === 'Escape') {
-      navigate(`/category/${page}`);
-    }
-  }, []);
-
   useEffect(() => {
-    document.addEventListener('click', handleClick);
+    const escFunction = e => {
+      if (e.key === 'Escape') {
+        navigate(`/category/${page}`);
+      }
+    };
     document.addEventListener('keydown', escFunction, false);
     return () => {
-      document.removeEventListener('click', handleClick);
       document.removeEventListener('keydown', escFunction, false);
+    };
+  }, []);
+    
+  useEffect(() => {
+    document.addEventListener('click', handleClick);
+    
+    return () => {
+      document.removeEventListener('click', handleClick);
     };
   }, []);
 
