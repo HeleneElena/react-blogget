@@ -14,6 +14,7 @@ export const Auth = () => {
   const [auth, loading, clearAuth] = useAuth();
   const [showLogout, setShowLogout] = useState(false);
   const token = useSelector(state => state.tokenReducer.token);
+  
   const dispatch = useDispatch();
 
   const getOut = () => {

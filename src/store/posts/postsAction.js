@@ -49,7 +49,7 @@ export const postsRequestAsync = newPage => (dispatch, getState) => {
   if (!token || loading || isLast) return;
   dispatch(postsRequest());
 
-  axios(`${URL_API}/${page}?Limit=10&${after ? `after=${after}` : ''}`, {
+  axios(`${URL_API}/best?limit=10`, {
     headers: {
       Authorization: `bearer ${token}`,
     },

@@ -23,23 +23,22 @@ export const Modal = () => {
     }
   };
 
-  useEffect(() => {
-    const escFunction = e => {
-      if (e.key === 'Escape') {
-        navigate(`/category/${page}`);
-      }
-    };
-    document.addEventListener('keydown', escFunction, false);
-    return () => {
-      document.removeEventListener('keydown', escFunction, false);
-    };
-  }, []);
+  const escFunction = e => {
+    if (e.key === 'Escape') {
+      navigate(`/category/${page}`);
+    }
+  };
+
+  const closeModal = () => {
+    navigate(`/category/${page}`);
+  };
     
   useEffect(() => {
     document.addEventListener('click', handleClick);
-    
+    document.addEventListener('keydown', escFunction, false);
     return () => {
       document.removeEventListener('click', handleClick);
+      document.removeEventListener('keydown', escFunction, false);
     };
   }, []);
 
@@ -75,7 +74,7 @@ export const Modal = () => {
             <Comments comments={comments} />
           </>
         )}
-        <button className={style.close} onClick={navigate(`/category/${page}`)}>
+        <button className={style.close} onClick={closeModal}>
           <CloseSvg />
         </button>
       </div>
