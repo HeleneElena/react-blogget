@@ -36,7 +36,7 @@ export const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        posts: [...state.posts, ...action.posts],
+        posts: [...state.posts, ...action.data],
         error: '',
         after: action.after,
       };

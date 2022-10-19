@@ -13,13 +13,13 @@ export const postsRequest = () => ({
 
 export const postsRequestSuccess = data => ({
   type: POSTS_REQUEST_SUCCESS,
-  data,
+  data: data.children,
   after: data.after,
 });
 
 export const postsRequestSuccessAfter = data => ({
   type: POSTS_REQUEST_SUCCESS_AFTER,
-  data,
+  data: data.children,
   after: data.after,
 });
 
@@ -55,11 +55,12 @@ export const postsRequestAsync = newPage => (dispatch, getState) => {
     },
   })
     .then(({data: {data}}) => {
-      const postsData = data.children;
+      console.log('data: ', data);
+      console.log('after: ', after);
       if (after) {
-        dispatch(postsRequestSuccessAfter(postsData));
+        dispatch(postsRequestSuccessAfter(data));
       } else {
-        dispatch(postsRequestSuccess(postsData));
+        dispatch(postsRequestSuccess(data));
       }
     })
     .catch(error => {
