@@ -49,14 +49,12 @@ export const postsRequestAsync = newPage => (dispatch, getState) => {
   if (!token || loading || isLast) return;
   dispatch(postsRequest());
 
-  axios(`${URL_API}/best?limit=10&${after ? `after=${after}` : ''}`, {
+  axios(`${URL_API}/${page}?limit=10&${after ? `after=${after}` : ''}`, {
     headers: {
       Authorization: `bearer ${token}`,
     },
   })
     .then(({data: {data}}) => {
-      console.log('data: ', data);
-      console.log('after: ', after);
       if (after) {
         dispatch(postsRequestSuccessAfter(data));
       } else {

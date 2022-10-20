@@ -5,7 +5,7 @@ import List from './List';
 import {Route, Routes} from 'react-router-dom';
 import Modal from '../Modal';
 import StartPage from '../page/StartPage';
-import Page404 from '../page/StartPage';
+import Page404 from '../page/Page404';
 
 export const Main = () => (
   <main className={style.main}>

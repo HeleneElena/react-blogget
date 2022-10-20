@@ -9,9 +9,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useAuth} from './../../../hooks/useAuth';
 import {deleteToken} from '../../../store/tokenReducer';
 import Preloader from '../../../UI/Preloader';
+import Notregistration from './Notregistration';
 
 export const Auth = () => {
-  const [auth, loading, clearAuth] = useAuth();
+  const [auth, loading, clearAuth, error] = useAuth();
   const [showLogout, setShowLogout] = useState(false);
   const token = useSelector(state => state.tokenReducer.token);
   
@@ -29,7 +30,8 @@ export const Auth = () => {
 
   return (
     <div className={style.container}>
-      {loading ? (
+      {error && <Notregistration />}
+      {(loading && !error) ? (
         <Preloader />
       ) : auth.name ? (
         <>
